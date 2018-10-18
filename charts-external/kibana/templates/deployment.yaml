@@ -1,0 +1,21 @@
+{{ if .Values.enabled }}
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: kibana
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: kibana
+    spec:
+      containers:
+      - name: kibana
+        image: {{ .Values.image | default "kibana:5.3" | quote }}
+        ports:
+        - containerPort: 5601
+        resources: {{ .Values.resources }}
+{{ end }}

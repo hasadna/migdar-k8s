@@ -1,0 +1,2 @@
+cd ..
+source functions.bash

@@ -1,0 +1,5 @@
+global:
+  namespace: minikube
+  persistentDataVolume:
+    type: hostPath
+    basePath: /var/migdar-minikube-storage

@@ -1,0 +1,58 @@
+{{ if .Values.enabled }}
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: elasticsearch
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  {{ if .Values.enableAntiAffinity }}
+  affinity:
+    # ensure elasticsearch won't be on the same node as nginx, pipelines or postgres
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+      - labelSelector:
+          matchExpressions:
+          - key: app
+            operator: In
+            values:
+            - pipelines
+            - nginx
+            - postgres
+        topologyKey: "kubernetes.io/hostname"
+  {{ end }}
+  template:
+    metadata:
+      labels:
+        app: elasticsearch
+    spec:
+      containers:
+      - name: elasticsearch
+        image: {{ .Values.image | default "budgetkey/open-budget-elasticsearch:latest" | quote }}
+        ports:
+        - containerPort: 9200
+        - containerPort: 9300
+        resources: {{ .Values.resources }}
+        env:
+        - name: ES_JAVA_OPTS
+          value: {{ .Values.ES_JAVA_OPTS | quote }}
+        - name: xpack.security.enabled
+          value: "false"
+        volumeMounts:
+        - name: data
+          mountPath: /usr/share/elasticsearch/data
+      volumes:
+      - name: data
+      {{ if .Values.gcePersistentDiskName }}
+        gcePersistentDisk:
+          pdName: {{ .Values.gcePersistentDiskName | quote }}
+      {{ else }}
+        {{ .Values.global.persistentDataVolume.type }}: {
+          {{ if eq .Values.global.persistentDataVolume.type "hostPath" }}
+            "path": "{{ .Values.global.persistentDataVolume.basePath }}/elasticsearch",
+            "type": "DirectoryOrCreate"
+          {{ end }}
+        }
+      {{ end }}
+{{ end }}

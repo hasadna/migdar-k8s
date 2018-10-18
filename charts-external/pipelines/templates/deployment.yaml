@@ -1,0 +1,88 @@
+{{ if .Values.enabled }}
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: pipelines
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  {{ if .Values.enableAntiAffinity }}
+  affinity:
+    # ensure pipelines won't be on the same node as elasticsearch
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+      - labelSelector:
+          matchExpressions:
+          - key: app
+            operator: In
+            values:
+            - elasticsearch
+        topologyKey: "kubernetes.io/hostname"
+  {{ end }}
+  template:
+    metadata:
+      labels:
+        app: pipelines
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
+        checksum/nginx-config: {{ include (print $.Template.BasePath "/nginx-configmap.yaml") . | sha256sum }}
+    spec:
+      terminationGracePeriodSeconds: 5
+      containers:
+      - name: pipelines
+        image: {{ .Values.image | default "budgetkey/budgetkey-data-pipelines:latest" | quote }}
+        ports:
+        - containerPort: 8000
+        resources: {{ .Values.resources }}
+        envFrom:
+        - configMapRef:
+            name: pipelines
+        {{ if .Values.secretName }}
+        # override the values from configmap
+        - secretRef:
+            name: {{ .Values.secretName | quote }}
+        {{ end }}
+        volumeMounts:
+        - mountPath: /var/datapackages
+          name: data
+          subPath: budgetkey-persistent-data/datapackages
+        - mountPath: /var/redis
+          name: data
+          subPath: budgetkey-persistent-data/redis
+        - mountPath: /home/dpp/.ssh
+          name: data
+          subPath: budgetkey-persistent-data/.ssh
+      - name: nginx
+        image: nginx:alpine
+        command:
+        - sh
+        - "-c"
+        - |
+          echo "HELLO WORLD!" &&\
+          ls -la /var/datapackages &&\
+          chmod -R 777 /var/datapackages &&\
+          echo "NGINX STARTING" &&\
+          nginx -g "daemon off;"
+        ports:
+        - containerPort: 80
+        resources: {"requests": {"cpu": "30m", "memory": "150Mi"}, "limits": {"memory": "300Mi"}}
+        volumeMounts:
+        - name: pipelines-nginx-conf
+          mountPath: /etc/nginx/conf.d
+          readOnly: true
+        - mountPath: /var/datapackages
+          name: data
+          subPath: budgetkey-persistent-data/datapackages
+      volumes:
+      - name: data
+        {{ if .Values.gcePersistentDiskName }}
+        gcePersistentDisk:
+          pdName: {{ .Values.gcePersistentDiskName | quote }}
+        {{ else }}
+        emptyDir: {}
+        {{ end }}
+      - name: pipelines-nginx-conf
+        configMap:
+          name: pipelines-nginx-conf
+{{ end }}
