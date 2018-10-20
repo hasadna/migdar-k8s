@@ -14,6 +14,7 @@ elasticsearch:
   image: budgetkey/open-budget-elasticsearch:a9591c533decd9b2a9f2db72fa2ab057227e8c49
 emails:
   image: budgetkey/budgetkey-emails:61f380830fb1753e4ad553972d3fd6a59ecc8724
+internal-search-ui: uumpa/hasadna-migdar-internal-search-ui:4439f6b3a5f9c9e1fc417ad7ce308a86d85d4181
 list-manager:
   image: budgetkey/budgetkey-list-manager:63f144e08117b2f044b6e92dece57d7227ea4d73
 nginx:
