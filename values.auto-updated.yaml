@@ -16,7 +16,7 @@ emails:
   image: budgetkey/budgetkey-emails:61f380830fb1753e4ad553972d3fd6a59ecc8724
 internal-search-ui:
   backendImage: uumpa/hasadna-nli-z3950:cf40777ddef03c40474e29f4b076b578ba21830f
-  image: uumpa/hasadna-migdar-internal-search-ui:9749317ec654b142900d2be5a658011a538e561a
+  image: uumpa/hasadna-migdar-internal-search-ui:b49228c0855706c1ff731292f989cf3c40a0e2c8
 list-manager:
   image: budgetkey/budgetkey-list-manager:63f144e08117b2f044b6e92dece57d7227ea4d73
 nginx:
