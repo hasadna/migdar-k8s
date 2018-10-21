@@ -1,0 +1,94 @@
+{{ if .Values.enabled }}
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: internal-search-ui
+spec:
+  replicas: 1
+  revisionHistoryLimit: 2
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: internal-search-ui
+      annotations:
+        checksum/nginx-config: {{ include (print $.Template.BasePath "/nginx-configmap.yaml") . | sha256sum }}
+    spec:
+      terminationGracePeriodSeconds: 30
+      containers:
+      - name: backend
+        image: {{ .Values.backendImage | default "uumpa/hasadna-nli-z3950" | quote }}
+        resources: {{ .Values.backendResources }}
+        args:
+        - "serve_search_app"
+        ports:
+        - containerPort: 5000
+        volumeMounts:
+        - mountPath: /data
+          name: data
+      - name: cron
+        image: {{ .Values.backendImage | default "uumpa/hasadna-nli-z3950" | quote }}
+        resources: {{ .Values.cronResources }}
+        command:
+        - bash
+        - "-c"
+        - |
+          mkdir -p data/search_import
+          while true; do
+            ! /entrypoint.sh gdrive_download && exit 1
+            sleep 60
+          done
+        env:
+          - name: SERVICE_ACCOUNT_FILE
+            value: /migdar-gdrive/secret-g-service-account.json
+        volumeMounts:
+        - mountPath: /data
+          name: data
+        - name: gdrive
+          mountPath: /migdar-gdrive
+          readOnly: true
+      - name: frontend
+        image: {{ .Values.image | default "uumpa/hasadna-migdar-internal-search-ui" | quote }}
+        args: ["-l", "3000"]
+        resources: {{ .Values.frontendResources }}
+        ports:
+        - containerPort: 3000
+      - name: nginx
+        image: nginx:alpine
+        ports:
+        - containerPort: 8000
+        resources: {"requests": {"cpu": "15m", "memory": "50Mi"}, "limits": {"memory": "200Mi"}}
+        volumeMounts:
+        - name: nginx-conf
+          mountPath: /etc/nginx/conf.d
+          readOnly: true
+        - mountPath: /data
+          name: data
+          readOnly: true
+        - name: nginx-htpasswd
+          mountPath: /etc/nginx/htpasswd
+          readOnly: true
+      volumes:
+      - name: data
+      {{ if .Values.gcePersistentDiskName }}
+        persistentVolumeClaim:
+          claimName: {{ .Release.Namespace }}-{{ .Values.gcePersistentDiskName }}-gcepd
+      {{ else }}
+        {{ .Values.global.persistentDataVolume.type }}: {
+          {{ if eq .Values.global.persistentDataVolume.type "hostPath" }}
+            "path": "{{ .Values.global.persistentDataVolume.basePath }}/postgres",
+            "type": "DirectoryOrCreate"
+          {{ end }}
+        }
+      {{ end }}
+      - name: gdrive
+        secret:
+          secretName: migdar-drive
+      - name: nginx-conf
+        configMap:
+          name: internal-search-ui-nginx
+      - name: nginx-htpasswd
+        secret:
+          secretName: {{ .Values.nginxHtpasswdSecretName }}
+{{ end }}

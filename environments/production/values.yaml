@@ -1,0 +1,7 @@
+internal-search-ui:
+  enabled: true
+  gcePersistentDiskName: oknesset-migdar-data
+  backendResources: '{"requests": {"cpu": "100m", "memory": "250Mi"}, "limits": {"memory": "500Mi"}}'
+  cronResources: '{"requests": {"cpu": "100m", "memory": "250Mi"}, "limits": {"memory": "500Mi"}}'
+  frontendResources: '{"requests": {"cpu": "100m", "memory": "250Mi"}, "limits": {"memory": "500Mi"}}'
+  nginxHtpasswdSecretName: internal-search-ui-htpasswd
