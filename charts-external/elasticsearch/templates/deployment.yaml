@@ -45,13 +45,13 @@ spec:
       volumes:
       - name: data
       {{ if .Values.gcePersistentDiskName }}
-        gcePersistentDisk:
-          pdName: {{ .Values.gcePersistentDiskName | quote }}
+        persistentVolumeClaim:
+          claimName: {{ .Release.Namespace }}-{{ .Values.gcePersistentDiskName }}-gcepd
       {{ else }}
         {{ .Values.global.persistentDataVolume.type }}: {
           {{ if eq .Values.global.persistentDataVolume.type "hostPath" }}
-            "path": "{{ .Values.global.persistentDataVolume.basePath }}/elasticsearch",
-            "type": "DirectoryOrCreate"
+          "path": "{{ .Values.global.persistentDataVolume.basePath }}/elasticsearch",
+          "type": "DirectoryOrCreate"
           {{ end }}
         }
       {{ end }}

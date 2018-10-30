@@ -1,0 +1,27 @@
+{{ if .Values.gcePersistentDiskName }}
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: {{ .Release.Namespace }}-{{ .Values.gcePersistentDiskName }}-gcepd
+spec:
+  storageClassName: ""
+  capacity:
+    storage: {{ .Values.persistentDiskSizeGB }}G
+  accessModes:
+    - ReadWriteOnce
+  gcePersistentDisk:
+    pdName: {{ .Values.gcePersistentDiskName | quote }}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ .Release.Namespace }}-{{ .Values.gcePersistentDiskName }}-gcepd
+spec:
+  storageClassName: ""
+  volumeName: {{ .Release.Namespace }}-{{ .Values.gcePersistentDiskName }}-gcepd
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: {{ .Values.persistentDiskSizeGB }}G
+{{ end }}

@@ -5,3 +5,38 @@ internal-search-ui:
   cronResources: '{"requests": {"cpu": "100m", "memory": "250Mi"}, "limits": {"memory": "500Mi"}}'
   frontendResources: '{"requests": {"cpu": "100m", "memory": "250Mi"}, "limits": {"memory": "500Mi"}}'
   nginxHtpasswdSecretName: internal-search-ui-htpasswd
+
+travis-ci-operator:
+  enabled: true
+  # gcloud --project hasadna-general compute disks create migdar-travis-ci-operator --zone europe-west1-b --size 5
+  gcePersistentDiskName: migdar-travis-ci-operator
+  persistentDiskSizeGB: 5
+
+postgres:
+  enabled: true
+  # kubectl create secret generic pipelines-db --from-literal=POSTGRES_PASSWORD= --from-literal=DATAFLOWS_DB_ENGINE=postgresql://postgres:123456@db:5432/postgres
+  dbSecretName: pipelines-db
+  # gcloud --project hasadna-general compute disks create migdar-pipelines-db --zone europe-west1-b --size 50
+  gcePersistentDiskName: migdar-pipelines-db
+  persistentDiskSizeGB: 50
+
+elasticsearch:
+  enabled: true
+  ES_JAVA_OPTS: "-Xms1g -Xmx1g"
+  resources: '{"requests": {"cpu": "250m", "memory": "1000Mi"}, "limits": {"memory": "2000Mi"}}'
+  # gcloud --project hasadna-general compute disks create migdar-pipelines-elasticsearch --zone europe-west1-b --size 50
+  gcePersistentDiskName: migdar-pipelines-elasticsearch
+  persistentDiskSizeGB: 50
+
+kibana:
+  enabled: true
+
+pipelines:
+  enabled: true
+  # gcloud --project hasadna-general compute disks create migdar-pipelines-data --zone europe-west1-b --size 50
+  gcePersistentDiskName: migdar-pipelines-data
+  persistentDiskSizeGB: 50
+  # kubectl create secret generic migdar --from-literal=MIGDAR_USERNAME= --from-literal=MIGDAR_PASSWORD=
+  migdarSecretName: migdar
+  # same secret as postgres dbSecretName
+  dbSecretName: pipelines-db

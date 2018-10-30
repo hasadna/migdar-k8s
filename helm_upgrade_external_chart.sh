@@ -33,6 +33,7 @@ for VALUES_FILE in values.yaml \
                    environments/${K8S_ENVIRONMENT_NAME}/values.auto-updated.yaml \
                    environments/${K8S_ENVIRONMENT_NAME}/values.${K8S_ENVIRONMENT_LABEL}.yaml
 do
+    # echo "VALUES_FILE=${VALUES_FILE}"
     if [ -f "${VALUES_FILE}" ]; then
         GLOBAL_VALUES=`./read_yaml.py "${VALUES_FILE}" global 2>/dev/null`
         ! [ -z "${GLOBAL_VALUES}" ] \

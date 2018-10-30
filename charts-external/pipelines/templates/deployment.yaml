@@ -25,34 +25,43 @@ spec:
       labels:
         app: pipelines
       annotations:
-        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
         checksum/nginx-config: {{ include (print $.Template.BasePath "/nginx-configmap.yaml") . | sha256sum }}
     spec:
       terminationGracePeriodSeconds: 5
       containers:
       - name: pipelines
-        image: {{ .Values.image | default "budgetkey/budgetkey-data-pipelines:latest" | quote }}
+        image: {{ .Values.image | default "uumpa/hasadna-migdar-data-pipelines:latest" | quote }}
+        args: ['server']
         ports:
-        - containerPort: 8000
+        - containerPort: 5000
         resources: {{ .Values.resources }}
-        envFrom:
-        - configMapRef:
-            name: pipelines
-        {{ if .Values.secretName }}
-        # override the values from configmap
-        - secretRef:
-            name: {{ .Values.secretName | quote }}
-        {{ end }}
+        env:
+        - name: DPP_REDIS_HOST
+          value: 127.0.0.1
+        - name: DATAFLOWS_DB_ENGINE
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Values.dbSecretName | quote }}
+              key: DATAFLOWS_DB_ENGINE
+        - name: DPP_ELASTICSEARCH
+          value: elasticsearch:9200
+        - name: MIGDAR_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Values.migdarSecretName | quote }}
+              key: MIGDAR_USERNAME
+        - name: MIGDAR_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Values.migdarSecretName | quote }}
+              key: MIGDAR_PASSWORD
         volumeMounts:
-        - mountPath: /var/datapackages
+        - mountPath: /pipelines/data
           name: data
-          subPath: budgetkey-persistent-data/datapackages
+          subPath: data
         - mountPath: /var/redis
           name: data
-          subPath: budgetkey-persistent-data/redis
-        - mountPath: /home/dpp/.ssh
-          name: data
-          subPath: budgetkey-persistent-data/.ssh
+          subPath: redis
       - name: nginx
         image: nginx:alpine
         command:
@@ -60,8 +69,8 @@ spec:
         - "-c"
         - |
           echo "HELLO WORLD!" &&\
-          ls -la /var/datapackages &&\
-          chmod -R 777 /var/datapackages &&\
+          ls -la /pipelines/data &&\
+          chmod -R 777 /pipelines/data &&\
           echo "NGINX STARTING" &&\
           nginx -g "daemon off;"
         ports:
@@ -71,17 +80,22 @@ spec:
         - name: pipelines-nginx-conf
           mountPath: /etc/nginx/conf.d
           readOnly: true
-        - mountPath: /var/datapackages
+        - mountPath: /pipelines/data
           name: data
-          subPath: budgetkey-persistent-data/datapackages
+          subPath: data
       volumes:
       - name: data
-        {{ if .Values.gcePersistentDiskName }}
-        gcePersistentDisk:
-          pdName: {{ .Values.gcePersistentDiskName | quote }}
-        {{ else }}
-        emptyDir: {}
-        {{ end }}
+      {{ if .Values.gcePersistentDiskName }}
+        persistentVolumeClaim:
+          claimName: {{ .Release.Namespace }}-{{ .Values.gcePersistentDiskName }}-gcepd
+      {{ else }}
+        {{ .Values.global.persistentDataVolume.type }}: {
+          {{ if eq .Values.global.persistentDataVolume.type "hostPath" }}
+          "path": "{{ .Values.global.persistentDataVolume.basePath }}/pipelines",
+          "type": "DirectoryOrCreate"
+          {{ end }}
+        }
+      {{ end }}
       - name: pipelines-nginx-conf
         configMap:
           name: pipelines-nginx-conf

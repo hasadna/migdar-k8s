@@ -7,8 +7,8 @@ data:
   default.conf: |
     server {
       listen 80 default_server;
-      location /datapackages {
-        root /var/;
+      location /data {
+        root /pipelines/;
         autoindex on;
       }
     }
