@@ -15,7 +15,7 @@ elasticsearch:
 emails:
   image: budgetkey/budgetkey-emails:61f380830fb1753e4ad553972d3fd6a59ecc8724
 internal-search-ui:
-  backendImage: uumpa/hasadna-nli-z3950:ffd28bb856d4af94f137eda4c4e373994f83e8b5
+  backendImage: uumpa/hasadna-nli-z3950:851b6cf47292861702d4970e9c25b3a86a19154d
   image: uumpa/hasadna-migdar-internal-search-ui:a015ccee84d3e47d086c61aaccdc508c4570b908
 list-manager:
   image: budgetkey/budgetkey-list-manager:63f144e08117b2f044b6e92dece57d7227ea4d73
