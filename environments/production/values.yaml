@@ -6,6 +6,14 @@ internal-search-ui:
   frontendResources: '{"requests": {"cpu": "100m", "memory": "250Mi"}, "limits": {"memory": "500Mi"}}'
   nginxHtpasswdSecretName: internal-search-ui-htpasswd
 
+web-ui:
+  enabled: true
+  resources: '{"requests": {"cpu": "100m", "memory": "250Mi"}, "limits": {"memory": "500Mi"}}'
+
+nginx:
+  enabled: true
+  resources: '{"requests": {"cpu": "50m", "memory": "150Mi"}, "limits": {"memory": "750Mi"}}'
+
 travis-ci-operator:
   enabled: true
   # gcloud --project hasadna-general compute disks create migdar-travis-ci-operator --zone europe-west1-b --size 5

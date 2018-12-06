@@ -5,7 +5,7 @@ metadata:
   name: nginx
 data:
   default_server.conf: |
-    server_name  migdar.org;
+    server_name  yodaat.org;
 
   servers.conf: |
 #    server {
@@ -41,41 +41,17 @@ data:
     migdar:$apr1$osnd5bKS$QCBIR1f6GiqNpN3b/hqzP.
 
   server-rules.conf: |
-    location /search/ {
-        proxy_pass http://search-api:8000;
-    }
+    # location /search/ {
+    #     proxy_pass http://search-api:8000;
+    # }
 
-    location /get/ {
-        proxy_pass http://search-api:8000;
-    }
+    # location /get/ {
+    #     proxy_pass http://search-api:8000;
+    # }
 
-    location /api/ {
-        proxy_pass http://data-api:8000;
-    }
-
-#    location /list {
-#        proxy_pass http://budgetkey-list-manager:8000;
-#    }
-
-#    location /s/ {
-#        proxy_pass http://budgetkey-app-search:8000;
-#    }
-
-#    location /i/ {
-#        proxy_pass http://budgetkey-app-generic-item:8000;
-#    }
-
-#    location /p/ {
-#        proxy_pass http://budgetkey-app-profile:8000;
-#    }
-
-#    location /about/ {
-#        proxy_pass http://budgetkey-app-about:8000;
-#    }
-
-#    location /auth/ {
-#        proxy_pass http://auth:8000;
-#    }
+    # location /api/ {
+    #     proxy_pass http://data-api:8000;
+    # }
 
     location /pipelines/ {
         proxy_pass http://pipelines:5000/;
@@ -85,21 +61,7 @@ data:
        proxy_pass http://pipelines;
     }
 
-#    location /_fonts {
-#       root /var/;
-#       if ($request_filename ~ "^.+(eot|svg|ttf|otf|woff2|woff)$") {
-#           add_header "Access-Control-Allow-Origin" "*";
-#           add_header "Access-Control-Allow-Methods" "POST, GET, OPTIONS";
-#       }
-#       autoindex on;
-#       add_header Access-Control-Allow-Origin *;
-#    }
-
-#    location /govbuy/ {
-#        proxy_pass http://openprocure-app-main-page:8000/;
-#    }
-
-#    location / {
-#        proxy_pass http://budgetkey-app-main-page:8000/;
-#    }
+    location / {
+        proxy_pass http://web-ui:8000/;
+    }
 {{ end }}
