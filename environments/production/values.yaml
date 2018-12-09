@@ -28,6 +28,9 @@ postgres:
   gcePersistentDiskName: migdar-pipelines-db
   persistentDiskSizeGB: 50
 
+search-api:
+  enabled: true
+
 elasticsearch:
   enabled: true
   ES_JAVA_OPTS: "-Xms1g -Xmx1g"

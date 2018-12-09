@@ -56,7 +56,7 @@ data:
     location /pipelines/ {
         proxy_pass http://pipelines:5000/;
     }
-
+  
     location /datapackages {
        proxy_pass http://pipelines;
     }
