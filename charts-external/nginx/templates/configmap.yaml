@@ -41,13 +41,13 @@ data:
     migdar:$apr1$osnd5bKS$QCBIR1f6GiqNpN3b/hqzP.
 
   server-rules.conf: |
-    # location /search/ {
-    #     proxy_pass http://search-api:8000;
-    # }
+    location /search/ {
+        proxy_pass http://search-api:8000;
+    }
 
-    # location /get/ {
-    #     proxy_pass http://search-api:8000;
-    # }
+    location /get/ {
+        proxy_pass http://search-api:8000;
+    }
 
     # location /api/ {
     #     proxy_pass http://data-api:8000;
