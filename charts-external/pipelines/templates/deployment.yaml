@@ -30,7 +30,7 @@ spec:
       terminationGracePeriodSeconds: 5
       containers:
       - name: pipelines
-        image: {{ .Values.image | default "uumpa/hasadna-migdar-data-pipelines:latest" | quote }}
+        image: {{ .Values.image | default "hasadna/migdar-data-pipelines:latest" | quote }}
         args: ['server']
         ports:
         - containerPort: 5000
