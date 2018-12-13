@@ -33,8 +33,8 @@ search-api:
 
 elasticsearch:
   enabled: true
-  ES_JAVA_OPTS: "-Xms1g -Xmx1g"
-  resources: '{"requests": {"cpu": "250m", "memory": "1000Mi"}, "limits": {"memory": "2000Mi"}}'
+  ES_JAVA_OPTS: "-Xms1500m -Xmx1500m"
+  resources: '{"requests": {"cpu": "250m", "memory": "1000Mi"}, "limits": {"cpu": "1500m", "memory": "3000Mi"}}'
   # gcloud --project hasadna-general compute disks create migdar-pipelines-elasticsearch --zone europe-west1-b --size 50
   gcePersistentDiskName: migdar-pipelines-elasticsearch
   persistentDiskSizeGB: 50
