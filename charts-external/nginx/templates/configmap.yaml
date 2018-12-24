@@ -5,25 +5,10 @@ metadata:
   name: nginx
 data:
   default_server.conf: |
-    server_name  yodaat.org;
+    server_name  yodaat.org www.yodaat.org;
 
-  servers.conf: |
-#    server {
-#      server_name data.obudget.org;
-#      return 301 https://app.redash.io/hasadna/;
-#    }
-
-#    server {
-#      server_name obudget.org www.obudget.org;
-#      rewrite ^ https://next.obudget.org/ permanent;
-#    }
-
-#    server {
-#      server_name socialmap.org.il www.socialmap.org.il;
-#      location / {
-#        proxy_pass http://socialmap-app-main-page:8000/;
-#      }
-#    }
+  api_server.conf: |
+    server_name  api.yodaat.org;
 
   kibana.conf: |
     server {
@@ -41,6 +26,19 @@ data:
     migdar:$apr1$osnd5bKS$QCBIR1f6GiqNpN3b/hqzP.
 
   server-rules.conf: |
+    location /pipelines/ {
+        proxy_pass http://pipelines:5000/;
+    }
+  
+    location /datapackages {
+       proxy_pass http://pipelines;
+    }
+
+    location / {
+        proxy_pass http://web-ui:8000/;
+    }
+
+  api-server-rules.conf: |
     location /search/ {
         proxy_pass http://search-api:8000;
     }
@@ -53,15 +51,28 @@ data:
     #     proxy_pass http://data-api:8000;
     # }
 
-    location /pipelines/ {
-        proxy_pass http://pipelines:5000/;
-    }
-  
-    location /datapackages {
-       proxy_pass http://pipelines;
+  servers.conf: |
+    server {
+        listen 80;
+        include /etc/nginx/api_server.conf;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header Host $http_host;
+        proxy_redirect off;
+        include "/etc/nginx/api-server-rules.conf";
     }
 
-    location / {
-        proxy_pass http://web-ui:8000/;
+    server {
+        listen 80 default_server;
+        include /etc/nginx/default_server.conf;
+        error_page 500 502 503 504 /500.html;
+        location = /500.html {
+            root /usr/share/nginx/errors;
+            internal;
+        }
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header Host $http_host;
+        proxy_redirect off;
+        include "/etc/nginx/server-rules.conf";
     }
+
 {{ end }}

@@ -29,17 +29,20 @@ spec:
       - name: nginx
         # this is plain nginx alpine with embedded fonts
         # all nginx configurations are done using the configmap
-        image: orihoch/budgetkey-nginx@sha256:04db7f5b12c5cf486f5e314a6a7da4d9c05dac0bb534d773dcff1e949c863341
+        image: hasadna/migdar-nginx@sha256:9b14390c21bcac5a1fcd1159ba8fa7a980e2e5fba08c49fbe2def2c4e9527397
         ports:
         - containerPort: 80
         resources: {{ .Values.resources }}
         volumeMounts:
         - name: configmap
+          mountPath: /etc/nginx/servers.conf
+          subPath: servers.conf
+        - name: configmap
           mountPath: /etc/nginx/default_server.conf
           subPath: default_server.conf
         - name: configmap
-          mountPath: /etc/nginx/servers.conf
-          subPath: servers.conf
+          mountPath: /etc/nginx/api_server.conf
+          subPath: api_server.conf
         - name: configmap
           mountPath: /etc/nginx/conf.d/kibana.conf
           subPath: kibana.conf
@@ -49,6 +52,9 @@ spec:
         - name: configmap
           mountPath: /etc/nginx/server-rules.conf
           subPath: server-rules.conf
+        - name: configmap
+          mountPath: /etc/nginx/api-server-rules.conf
+          subPath: api-server-rules.conf
       volumes:
       - name: configmap
         configMap:

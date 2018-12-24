@@ -1,0 +1,20 @@
+{{ if .Values.enabled }}
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: web-ui
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: web-ui
+    spec:
+      terminationGracePeriodSeconds: 5
+      containers:
+      - name: web-ui
+        image: {{ .Values.image | default "hasadna/migdar-ui:latest" | quote }}
+        ports:
+        - containerPort: 8000
+        resources: {{ .Values.resources }}
+{{ end }}
