@@ -6,7 +6,7 @@ internal-search-ui:
   backendImage: uumpa/hasadna-nli-z3950:851b6cf47292861702d4970e9c25b3a86a19154d
   image: uumpa/hasadna-migdar-internal-search-ui:a015ccee84d3e47d086c61aaccdc508c4570b908
 migdar-data-pipelines:
-  image: hasadna/migdar-data-pipelines:20f772db946b35b7e5d6278cc21e037729ff462b
+  image: hasadna/migdar-data-pipelines:ba54faf3d0efd7908aa0b8130d158fb0e5e6f42f
 nginx:
   image: budgetkey/open-budget-nginx-frontend:d8cbc9e27c438584170ee5ab3bc1896e1727f0d1
 pipelines:
