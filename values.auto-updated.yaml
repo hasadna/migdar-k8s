@@ -10,7 +10,7 @@ migdar-data-pipelines:
 nginx:
   image: budgetkey/open-budget-nginx-frontend:d8cbc9e27c438584170ee5ab3bc1896e1727f0d1
 pipelines:
-  image: hasadna/migdar-data-pipelines:5e35a3abc7bc684f27ee41ee37c8de37cf9a4f44
+  image: hasadna/migdar-data-pipelines:f4ba6640976f0c91c1ca24bdd5baf9175f4b1814
 postgres:
   image: budgetkey/budgetkey-postgres:3efcf352910056cd965ca9a0212722fa03fb1840
 search-api:
