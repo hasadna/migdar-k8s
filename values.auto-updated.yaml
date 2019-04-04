@@ -5,8 +5,6 @@ elasticsearch:
 internal-search-ui:
   backendImage: uumpa/hasadna-nli-z3950:851b6cf47292861702d4970e9c25b3a86a19154d
   image: uumpa/hasadna-migdar-internal-search-ui:a015ccee84d3e47d086c61aaccdc508c4570b908
-migdar-data-pipelines:
-  image: hasadna/migdar-data-pipelines:79c5dbf4bfb2278559d3bf40f3c902daff70bf18
 nginx:
   image: budgetkey/open-budget-nginx-frontend:d8cbc9e27c438584170ee5ab3bc1896e1727f0d1
 pipelines:
@@ -14,4 +12,4 @@ pipelines:
 postgres:
   image: budgetkey/budgetkey-postgres:3efcf352910056cd965ca9a0212722fa03fb1840
 search-api:
-  image: hasadna/migdar-search-api:90036239da388d67ac001c1177f26c0c89352ad0
+  image: hasadna/migdar-search-api:861fd49fa3f2f4242e090b67dac800b1d5244559
