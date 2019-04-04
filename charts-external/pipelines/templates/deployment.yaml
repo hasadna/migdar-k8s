@@ -69,8 +69,8 @@ spec:
         - "-c"
         - |
           echo "HELLO WORLD!" &&\
-          ls -la /pipelines/data &&\
-          chmod -R 777 /pipelines/data &&\
+          chown -R nginx.nginx /pipelines/ &&\
+          chmod -R 777 /pipelines/ &&\
           echo "NGINX STARTING" &&\
           nginx -g "daemon off;"
         ports:
