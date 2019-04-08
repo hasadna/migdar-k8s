@@ -47,6 +47,10 @@ data:
         proxy_pass http://search-api:8000;
     }
 
+    location /data/ {
+        proxy_pass http://pipelines:8000;
+    }
+
     # location /api/ {
     #     proxy_pass http://data-api:8000;
     # }
