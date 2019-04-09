@@ -48,7 +48,7 @@ data:
     }
 
     location /data/ {
-        proxy_pass http://pipelines:8000;
+        proxy_pass http://pipelines;
     }
 
     # location /api/ {
