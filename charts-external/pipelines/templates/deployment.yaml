@@ -83,6 +83,9 @@ spec:
         - mountPath: /pipelines/data
           name: data
           subPath: data
+        - name: gdrive
+          mountPath: /migdar-gdrive
+          readOnly: true
       volumes:
       - name: data
       {{ if .Values.gcePersistentDiskName }}
@@ -99,4 +102,7 @@ spec:
       - name: pipelines-nginx-conf
         configMap:
           name: pipelines-nginx-conf
+      - name: gdrive
+        secret:
+          secretName: migdar-drive
 {{ end }}
