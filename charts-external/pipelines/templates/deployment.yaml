@@ -62,6 +62,9 @@ spec:
         - mountPath: /var/redis
           name: data
           subPath: redis
+        - name: gdrive
+          mountPath: /migdar-gdrive
+          readOnly: true
       - name: nginx
         image: nginx:alpine
         command:
@@ -83,9 +86,6 @@ spec:
         - mountPath: /pipelines/data
           name: data
           subPath: data
-        - name: gdrive
-          mountPath: /migdar-gdrive
-          readOnly: true
       volumes:
       - name: data
       {{ if .Values.gcePersistentDiskName }}
