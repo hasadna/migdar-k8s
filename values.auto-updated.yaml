@@ -8,7 +8,7 @@ internal-search-ui:
 nginx:
   image: budgetkey/open-budget-nginx-frontend:d8cbc9e27c438584170ee5ab3bc1896e1727f0d1
 pipelines:
-  image: hasadna/migdar-data-pipelines:ab87d9d239d2d4b2d45990e30db975e02b5bbcf5
+  image: hasadna/migdar-data-pipelines:367568d654ad2e9a24a701cba9050ee5c5c12ae1
 postgres:
   image: budgetkey/budgetkey-postgres:3efcf352910056cd965ca9a0212722fa03fb1840
 search-api:
