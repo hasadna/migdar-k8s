@@ -38,6 +38,7 @@ elasticsearch:
   # gcloud --project hasadna-general compute disks create migdar-pipelines-elasticsearch --zone europe-west1-b --size 50
   gcePersistentDiskName: migdar-pipelines-elasticsearch
   persistentDiskSizeGB: 50
+  secretName: migdar-elasticsearch
 
 kibana:
   enabled: true

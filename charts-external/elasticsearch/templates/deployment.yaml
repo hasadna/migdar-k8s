@@ -39,6 +39,10 @@ spec:
           value: {{ .Values.ES_JAVA_OPTS | quote }}
         - name: xpack.security.enabled
           value: "false"
+        - name: discovery.type
+          value: single-node
+        - name: DECODE_KEY
+          valueFrom: {secretKeyRef: {name: {{ .Values.secretName | quote }}, key: DECODE_KEY}}
         volumeMounts:
         - name: data
           mountPath: /usr/share/elasticsearch/data

@@ -1,7 +1,12 @@
 data-api:
   image: budgetkey/open-budget-data-api:584f2ea5fa3bc3220287be0a97f6bc5482e8ba0c
 elasticsearch:
-  image: budgetkey/open-budget-elasticsearch:a9591c533decd9b2a9f2db72fa2ab057227e8c49
+  # image: budgetkey/open-budget-elasticsearch:a9591c533decd9b2a9f2db72fa2ab057227e8c49
+  # image: elasticsearch:5.6
+  # image: elasticsearch:6.8.4
+  image: budgetkey/open-budget-elasticsearch-commercial:latest
+  # image: elasticsearch:7.3.2
+  # image: docker.elastic.co/elasticsearch/elasticsearch:7.3.2
 internal-search-ui:
   backendImage: uumpa/hasadna-nli-z3950:990d2bae23efe40bc6ae2029cb4c4dc75e52c85c
   image: uumpa/hasadna-migdar-internal-search-ui:a015ccee84d3e47d086c61aaccdc508c4570b908
