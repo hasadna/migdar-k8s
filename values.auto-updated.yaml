@@ -1,19 +1,14 @@
 data-api:
   image: budgetkey/open-budget-data-api:584f2ea5fa3bc3220287be0a97f6bc5482e8ba0c
 elasticsearch:
-  # image: budgetkey/open-budget-elasticsearch:a9591c533decd9b2a9f2db72fa2ab057227e8c49
-  # image: elasticsearch:5.6
-  # image: elasticsearch:6.8.4
   image: budgetkey/open-budget-elasticsearch-commercial:latest
-  # image: elasticsearch:7.3.2
-  # image: docker.elastic.co/elasticsearch/elasticsearch:7.3.2
 internal-search-ui:
   backendImage: uumpa/hasadna-nli-z3950:990d2bae23efe40bc6ae2029cb4c4dc75e52c85c
   image: uumpa/hasadna-migdar-internal-search-ui:a015ccee84d3e47d086c61aaccdc508c4570b908
 nginx:
   image: budgetkey/open-budget-nginx-frontend:d8cbc9e27c438584170ee5ab3bc1896e1727f0d1
 pipelines:
-  image: hasadna/migdar-data-pipelines:706dee9c17ef7864848b9ddf5820e466653095c9
+  image: hasadna/migdar-data-pipelines:181cf69773bcd29c8037d3801b6b9ebbc3f6494e
 postgres:
   image: budgetkey/budgetkey-postgres:3efcf352910056cd965ca9a0212722fa03fb1840
 search-api:
