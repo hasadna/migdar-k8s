@@ -12,4 +12,4 @@ pipelines:
 postgres:
   image: budgetkey/budgetkey-postgres:3efcf352910056cd965ca9a0212722fa03fb1840
 search-api:
-  image: hasadna/migdar-search-api:5cc4a340028e18d28126fcb509d25a66338a4bd4
+  image: hasadna/migdar-search-api:4d2f8002c4c6c6eebcc4e16c1d3dfa4fb5968fd6
