@@ -43,7 +43,7 @@ spec:
             secretKeyRef:
               name: {{ .Values.dbSecretName | quote }}
               key: DATAFLOWS_DB_ENGINE
-        - name: DPP_ELASTICSEARCH
+        - name: DATAFLOWS_ELASTICSEARCH
           value: elasticsearch:9200
         - name: MIGDAR_USERNAME
           valueFrom:
