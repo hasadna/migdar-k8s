@@ -56,7 +56,7 @@ elasticsearch:
 kibana:
   enabled: false
   resources: >
-    {"requests": {"cpu": "75m", "memory": "150Mi"}, "limits": {"memory": "300Mi"}}
+    {"requests": {"cpu": "75m", "memory": "150Mi"}, "limits": {"memory": "1Gi"}}
 
 list-manager:
   enabled: false
