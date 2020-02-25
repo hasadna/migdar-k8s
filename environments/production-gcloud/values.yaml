@@ -1,18 +1,10 @@
 internal-search-ui:
   enabled: true
-  # gcePersistentDiskName: oknesset-migdar-data
-  nfsServer: "172.16.0.2"
-  nfsPath: "/srv/default2/migdar/internal-search-ui"
+  gcePersistentDiskName: oknesset-migdar-data
   backendResources: '{"requests": {"cpu": "100m", "memory": "250Mi"}, "limits": {"memory": "500Mi"}}'
   cronResources: '{"requests": {"cpu": "100m", "memory": "250Mi"}, "limits": {"memory": "500Mi"}}'
   frontendResources: '{"requests": {"cpu": "100m", "memory": "250Mi"}, "limits": {"memory": "500Mi"}}'
   nginxHtpasswdSecretName: internal-search-ui-htpasswd
-  ingresses:
-    - name: internal-search-ui
-      rules:
-        - host: migdar-internal-search.odata.org.il
-          serviceName: internal-search-ui
-          servicePort: 8000
 
 web-ui:
   enabled: true
@@ -21,34 +13,20 @@ web-ui:
 nginx:
   enabled: true
   resources: '{"requests": {"cpu": "50m", "memory": "150Mi"}, "limits": {"memory": "750Mi"}}'
-  ingresses:
-    - name: nginx
-      rules:
-        - host: yodaat.org
-          serviceName: nginx
-          servicePort: 80
-        - host: www.yodaat.org
-          serviceName: nginx
-          servicePort: 80
-        - host: api.yodaat.org
-          serviceName: nginx
-          servicePort: 80
 
 travis-ci-operator:
-  enabled: false
+  enabled: true
   # gcloud --project hasadna-general compute disks create migdar-travis-ci-operator --zone europe-west1-b --size 5
-  # gcePersistentDiskName: migdar-travis-ci-operator
-  # persistentDiskSizeGB: 5
+  gcePersistentDiskName: migdar-travis-ci-operator
+  persistentDiskSizeGB: 5
 
 postgres:
   enabled: true
   # kubectl create secret generic pipelines-db --from-literal=POSTGRES_PASSWORD= --from-literal=DATAFLOWS_DB_ENGINE=postgresql://postgres:123456@db:5432/postgres
   dbSecretName: pipelines-db
   # gcloud --project hasadna-general compute disks create migdar-pipelines-db --zone europe-west1-b --size 50
-  # gcePersistentDiskName: migdar-pipelines-db
-  # persistentDiskSizeGB: 50
-  nfsServer: "172.16.0.2"
-  nfsPath: "/srv/default2/migdar/postgres"
+  gcePersistentDiskName: migdar-pipelines-db
+  persistentDiskSizeGB: 50
 
 search-api:
   enabled: true
@@ -58,10 +36,8 @@ elasticsearch:
   ES_JAVA_OPTS: "-Xms1500m -Xmx1500m"
   resources: '{"requests": {"cpu": "250m", "memory": "1000Mi"}, "limits": {"cpu": "1500m", "memory": "3000Mi"}}'
   # gcloud --project hasadna-general compute disks create migdar-pipelines-elasticsearch --zone europe-west1-b --size 50
-  # gcePersistentDiskName: migdar-pipelines-elasticsearch7
-  # persistentDiskSizeGB: 50
-  nfsServer: "172.16.0.2"
-  nfsPath: "/srv/default2/migdar/elasticsearch"
+  gcePersistentDiskName: migdar-pipelines-elasticsearch7
+  persistentDiskSizeGB: 50
   secretName: migdar-elasticsearch
 
 kibana:
@@ -70,10 +46,8 @@ kibana:
 pipelines:
   enabled: true
   # gcloud --project hasadna-general compute disks create migdar-pipelines-data --zone europe-west1-b --size 50
-  # gcePersistentDiskName: migdar-pipelines-data
-  # persistentDiskSizeGB: 50
-  nfsServer: "172.16.0.2"
-  nfsPath: "/srv/default2/migdar/pipelines"
+  gcePersistentDiskName: migdar-pipelines-data
+  persistentDiskSizeGB: 50
   # kubectl create secret generic migdar --from-literal=MIGDAR_USERNAME= --from-literal=MIGDAR_PASSWORD=
   migdarSecretName: migdar
   # same secret as postgres dbSecretName
