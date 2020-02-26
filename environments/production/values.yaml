@@ -9,6 +9,8 @@ internal-search-ui:
   nginxHtpasswdSecretName: internal-search-ui-htpasswd
   ingresses:
     - name: internal-search-ui
+      annotations:
+        nginx.ingress.kubernetes.io/proxy-read-timeout: 1200
       rules:
         - host: migdar-internal-search.odata.org.il
           serviceName: internal-search-ui

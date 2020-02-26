@@ -10,6 +10,8 @@ data:
       auth_basic "Restricted Content";
       auth_basic_user_file /etc/nginx/htpasswd/secret-nginx-htpasswd;
 
+      proxy_read_timeout 1200;
+
       # this is required, otherwise cloudflare caches the private data
       add_header Cache-Control "no-store";
 
