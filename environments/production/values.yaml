@@ -3,9 +3,9 @@ internal-search-ui:
   # gcePersistentDiskName: oknesset-migdar-data
   nfsServer: "172.16.0.9"
   nfsPath: "/migdar/internal-search-ui"
-  backendResources: '{"requests": {"cpu": "100m", "memory": "250Mi"}, "limits": {"memory": "500Mi"}}'
-  cronResources: '{"requests": {"cpu": "100m", "memory": "250Mi"}, "limits": {"memory": "500Mi"}}'
-  frontendResources: '{"requests": {"cpu": "100m", "memory": "250Mi"}, "limits": {"memory": "500Mi"}}'
+  backendResources: '{"requests": {"cpu": "49m", "memory": "138Mi"}, "limits": {"cpu": "218m", "memory": "614Mi"}}'
+  cronResources: '{"requests": {"cpu": "35m", "memory": "64Mi"}, "limits": {"cpu": "218m", "memory": "154Mi"}}'
+  frontendResources: '{"requests": {"cpu": "11m", "memory": "64Mi"}, "limits": {"cpu": "49m", "memory": "154Mi"}}'
   nginxHtpasswdSecretName: internal-search-ui-htpasswd
   ingresses:
     - name: internal-search-ui
@@ -18,7 +18,7 @@ internal-search-ui:
 
 web-ui:
   enabled: true
-  resources: '{"requests": {"cpu": "100m", "memory": "250Mi"}, "limits": {"memory": "500Mi"}}'
+  resources: '{"requests": {"cpu": "25m", "memory": "256Mi"}, "limits": {"cpu": "48m", "memory": "256Mi"}}'
 
 nginx:
   enabled: true
@@ -58,7 +58,7 @@ search-api:
 elasticsearch:
   enabled: true
   ES_JAVA_OPTS: "-Xms1500m -Xmx1500m"
-  resources: '{"requests": {"cpu": "250m", "memory": "1000Mi"}, "limits": {"cpu": "1500m", "memory": "3000Mi"}}'
+  resources: '{"requests": {"cpu": "25m", "memory": "2296Mi"}, "limits": {"cpu": "102m", "memory": "2296Mi"}}'
   # gcloud --project hasadna-general compute disks create migdar-pipelines-elasticsearch --zone europe-west1-b --size 50
   # gcePersistentDiskName: migdar-pipelines-elasticsearch7
   # persistentDiskSizeGB: 50

@@ -56,7 +56,7 @@ elasticsearch:
 kibana:
   enabled: false
   resources: >
-    {"requests": {"cpu": "75m", "memory": "150Mi"}, "limits": {"memory": "1Gi"}}
+    {"requests": {"cpu": "25m", "memory": "335Mi"}, "limits": {"cpu": "102m", "memory": "1492Mi"}}
 
 list-manager:
   enabled: false
@@ -66,22 +66,22 @@ list-manager:
 nginx:
   enabled: false
   resources: >
-    {"requests": {"cpu": "50m", "memory": "150Mi"}, "limits": {"memory": "750Mi"}}
+    {"requests": {"cpu": "25m", "memory": "256Mi"}, "limits": {"cpu": "48m", "memory": "256Mi"}}
 
 pipelines:
   enabled: false
   resources: >
-    {"requests": {"cpu": "100m", "memory": "1Gi"}, "limits": {"memory": "3Gi"}}
+    {"requests": {"cpu": "35m", "memory": "776Mi"}, "limits": {"cpu": "218m", "memory": "3456Mi"}}
 
 postgres:
   enabled: false
   resources: >
-    {"requests": {"cpu": "100m", "memory": "150Mi"}, "limits": {"memory": "500Mi"}}
+    {"requests": {"cpu": "25m", "memory": "256Mi"}, "limits": {"cpu": "48m", "memory": "256Mi"}}
 
 search-api:
   enabled: false
   resources: >
-    {"requests": {"cpu": "45m", "memory": "50Mi"}, "limits": {"memory": "300Mi"}}
+    {"requests": {"cpu": "25m", "memory": "256Mi"}, "limits": {"cpu": "48m", "memory": "270Mi"}}
 
 socialmap:
   enabled: false
