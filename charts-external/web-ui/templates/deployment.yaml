@@ -20,4 +20,11 @@ spec:
         ports:
         - containerPort: 8000
         resources: {{ .Values.resources }}
+        env:
+        - name: SENDGRID_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Values.secretName | quote }}
+              key: SENDGRID_API_KEY
+
 {{ end }}
