@@ -3,6 +3,27 @@ version: "v0.0.0"
 apiVersion: v2
 
 dependencies:
+- name: elasticsearch
+  version: v0.0.0
+  repository: file://elasticsearch
 - name: internal-search-ui
   version: v0.0.0
   repository: file://internal-search-ui
+- name: kibana
+  version: v0.0.0
+  repository: file://kibana
+- name: nginx
+  version: v0.0.0
+  repository: file://nginx
+- name: pipelines
+  version: v0.0.0
+  repository: file://pipelines
+- name: postgres
+  version: v0.0.0
+  repository: file://postgres
+- name: search-api
+  version: v0.0.0
+  repository: file://search-api
+- name: web-ui
+  version: v0.0.0
+  repository: file://web-ui
