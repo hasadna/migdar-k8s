@@ -1,8 +1,5 @@
 # Migdar app
 
-This app contains all other apps as dependencies.
+This app contains all other apps as helm dependencies.
 
-The app is continuously synced to Hasadna cluster via ArgoCD, see https://github.com/hasadna/hasadna-k8s/blob/master/docs/argocd.md
-
-To diable the auto-sync (for debugging or to review changes before applying) -
-login to https://argocd.hasadna.org.il and disable auto-sync for the migdar app.
+The app is continuously synced to Hasadna cluster via ArgoCD as defined [here](https://github.com/hasadna/hasadna-k8s/blob/master/apps/hasadna-argocd/values-hasadna.yaml#L173).
