@@ -68,6 +68,13 @@ spec:
         - name: gdrive
           mountPath: /migdar-gdrive
           readOnly: true
+        livenessProbe:
+          exec:
+            command:
+            - exit $(test $(date +%H) -eq 3 && echo 1 || echo 0)
+          failureThreshold: 1
+          initialDelaySeconds: 3600
+          periodSeconds: 60
       - name: nginx
         image: nginx:alpine
         command:
