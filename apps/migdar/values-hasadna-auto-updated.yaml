@@ -13,3 +13,5 @@ postgres:
   image: budgetkey/budgetkey-postgres:3efcf352910056cd965ca9a0212722fa03fb1840
 search-api:
   image: hasadna/migdar-search-api:636deb6fb786669b7c5440549cc8d32db97b8bcc
+web-ui:
+  image: hasadna/migdar-ui:41da7546e9a23eec11446917ba018470f3f39b8f
