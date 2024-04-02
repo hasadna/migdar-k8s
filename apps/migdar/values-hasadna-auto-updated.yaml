@@ -14,4 +14,4 @@ postgres:
 search-api:
   image: hasadna/migdar-search-api:636deb6fb786669b7c5440549cc8d32db97b8bcc
 web-ui:
-  image: hasadna/migdar-ui:b797319852a3a9dbe7795021e68015c6ed53b791
+  image: hasadna/migdar-ui:394281c7155e188672d4909a455ca2fe01ed8d36
