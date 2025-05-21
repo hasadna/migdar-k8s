@@ -78,16 +78,16 @@ spec:
           initialDelaySeconds: 3600
           periodSeconds: 60
       - name: nginx
-        image: nginx:alpine
+        image: nginx:1.27-alpine
         command:
         - sh
         - "-c"
         - |
           echo "HELLO WORLD!" &&\
-          chown -R nginx.nginx /pipelines/ &&\
+          chown -R nginx:nginx /pipelines/ &&\
           chmod -R 777 /pipelines/ &&\
           echo "NGINX STARTING" &&\
-          nginx -g "daemon off;"
+          exec nginx -g "daemon off;"
         ports:
         - containerPort: 80
         resources: {"requests": {"cpu": "30m", "memory": "150Mi"}, "limits": {"memory": "300Mi"}}
