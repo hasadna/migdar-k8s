@@ -4,8 +4,6 @@ metadata:
   name: internal-search-ui-nginx
 data:
   default.conf: |
-    worker_processes 4;
-    
     server {
       listen 8000;
 

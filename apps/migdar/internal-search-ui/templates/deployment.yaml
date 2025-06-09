@@ -59,6 +59,12 @@ spec:
         - containerPort: 3000
       - name: nginx
         image: nginx:alpine
+        command:
+          - sh
+          - -c
+          - |
+            sed -i 's|worker_processes  auto|worker_processes 4|' /etc/nginx/nginx.conf
+            exec /docker-entrypoint.sh nginx -g 'daemon off;'
         ports:
         - containerPort: 8000
         resources: {"requests": {"cpu": "15m", "memory": "50Mi"}, "limits": {"memory": "200Mi"}}
