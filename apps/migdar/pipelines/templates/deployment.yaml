@@ -100,21 +100,23 @@ spec:
           subPath: data
       volumes:
       - name: data
-      {{ if .Values.gcePersistentDiskName }}
         persistentVolumeClaim:
-          claimName: {{ .Release.Namespace }}-{{ .Values.gcePersistentDiskName }}-gcepd
-      {{ else if .Values.nfsServer }}
-        nfs:
-          server: {{ .Values.nfsServer | quote }}
-          path: {{ .Values.nfsPath | quote }}
-      {{ else }}
-        {{ .Values.global.persistentDataVolume.type }}: {
-          {{ if eq .Values.global.persistentDataVolume.type "hostPath" }}
-          "path": "{{ .Values.global.persistentDataVolume.basePath }}/pipelines",
-          "type": "DirectoryOrCreate"
-          {{ end }}
-        }
-      {{ end }}
+          claimName: pipelines2
+      # {{ if .Values.gcePersistentDiskName }}
+      #   persistentVolumeClaim:
+      #     claimName: {{ .Release.Namespace }}-{{ .Values.gcePersistentDiskName }}-gcepd
+      # {{ else if .Values.nfsServer }}
+      #   nfs:
+      #     server: {{ .Values.nfsServer | quote }}
+      #     path: {{ .Values.nfsPath | quote }}
+      # {{ else }}
+      #   {{ .Values.global.persistentDataVolume.type }}: {
+      #     {{ if eq .Values.global.persistentDataVolume.type "hostPath" }}
+      #     "path": "{{ .Values.global.persistentDataVolume.basePath }}/pipelines",
+      #     "type": "DirectoryOrCreate"
+      #     {{ end }}
+      #   }
+      # {{ end }}
       - name: pipelines-nginx-conf
         configMap:
           name: pipelines-nginx-conf
