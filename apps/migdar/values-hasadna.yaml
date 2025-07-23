@@ -4,7 +4,7 @@ internal-search-ui:
   nfsServer: "172.16.0.9"
   nfsPath: "/migdar/internal-search-ui"
   backendResources: '{"requests": {"cpu": "49m", "memory": "138Mi"}, "limits": {"cpu": "218m", "memory": "614Mi"}}'
-  cronResources: '{"requests": {"cpu": "35m", "memory": "64Mi"}, "limits": {"cpu": "218m", "memory": "154Mi"}}'
+  cronResources: '{"requests": {"cpu": "150m", "memory": "64Mi"}, "limits": {"cpu": "300m", "memory": "154Mi"}}'
   frontendResources: '{"requests": {"cpu": "11m", "memory": "64Mi"}, "limits": {"cpu": "49m", "memory": "154Mi"}}'
   nginxHtpasswdSecretName: internal-search-ui-htpasswd
   ingresses:
@@ -18,7 +18,7 @@ internal-search-ui:
 
 web-ui:
   enabled: true
-  resources: '{"requests": {"cpu": "25m", "memory": "256Mi"}, "limits": {"cpu": "48m", "memory": "256Mi"}}'
+  resources: '{"requests": {"cpu": "100m", "memory": "256Mi"}, "limits": {"cpu": "200m", "memory": "256Mi"}}'
   secretName: migdar-ui
 
 nginx:
