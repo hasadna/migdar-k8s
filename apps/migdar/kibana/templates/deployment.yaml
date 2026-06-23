@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: kibana
-        image: {{ .Values.image | default "elastic/kibana:7.3.2" | quote }}
+        image: {{ .Values.image | default "elastic/kibana:8.17.0" | quote }}
         ports:
         - containerPort: 5601
         resources: {{ .Values.resources }}
