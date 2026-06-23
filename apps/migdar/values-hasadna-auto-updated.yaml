@@ -1,7 +1,7 @@
 data-api:
   image: budgetkey/open-budget-data-api:584f2ea5fa3bc3220287be0a97f6bc5482e8ba0c
 elasticsearch:
-  image: budgetkey/open-budget-elasticsearch-commercial:latest
+  image: ghcr.io/whiletrue-industries/elasticsearch-analysis-hebrew:8.17.0
 internal-search-ui:
   backendImage: uumpa/hasadna-nli-z3950:990d2bae23efe40bc6ae2029cb4c4dc75e52c85c
   image: uumpa/hasadna-migdar-internal-search-ui:a015ccee84d3e47d086c61aaccdc508c4570b908
