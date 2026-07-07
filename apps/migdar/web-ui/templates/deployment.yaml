@@ -21,10 +21,25 @@ spec:
         - containerPort: 8000
         resources: {{ .Values.resources }}
         env:
-        - name: SENDGRID_API_KEY
+        - name: SMTP_HOST
           valueFrom:
             secretKeyRef:
               name: {{ .Values.secretName | quote }}
-              key: SENDGRID_API_KEY
+              key: SMTP_HOST
+        - name: SMTP_PORT
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Values.secretName | quote }}
+              key: SMTP_PORT
+        - name: SMTP_USER
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Values.secretName | quote }}
+              key: SMTP_USER
+        - name: SMTP_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Values.secretName | quote }}
+              key: SMTP_PASSWORD
 
 {{ end }}
